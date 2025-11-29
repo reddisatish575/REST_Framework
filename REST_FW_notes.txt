@@ -309,7 +309,19 @@ Generics
 	8. RetrieveUpdateDestroyAPIView
 		-> for retrieving, updating and deleting the objects using primary key 
 
+Viewsets
+--------
+-> it combines the set of functionalities of both views and serializers, 
+	making it even easier to do standard CRUD operations
+-> we have 2 implementations for Viewsets
+	1. viewSets.Viewset
+		-> in this we have to provide inbuilt functions such as list(),create(),
+			retireve(),update(),delete().
+	2. viewSets.ModelViewSet 
+		-> Takes only 'queryset', 'serializer_class' and automatcally provides both primary key
+			and non-primary key based operations.
 
+ 
         
 
 
