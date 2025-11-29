@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from employees.models import Employee
 from django.http import Http404
-from rest_framework import mixins,generics
+from rest_framework import mixins,generics, viewsets
 
 # Create your views here.
 
@@ -124,7 +124,7 @@ class EmployeeDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.
 
 '''
 
-# Using Generic Class-Based Views
+'''# Using Generic Class-Based Views
 class Employees(generics.ListAPIView, generics.CreateAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
@@ -133,3 +133,52 @@ class EmployeeDetail(generics.RetrieveAPIView, generics.UpdateAPIView, generics.
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     lookup_field = 'pk'
+
+'''
+''' # Using ViewSets
+
+class EmployeeViewSet(viewsets.ViewSet):
+    def list(self, request):
+        employees = Employee.objects.all()
+        serializer = EmployeeSerializer(employees, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request):
+        serializer = EmployeeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, pk=None):
+        try:
+            employee = Employee.objects.get(pk=pk)
+        except Employee.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = EmployeeSerializer(employee)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def update(self, request, pk=None):
+        try:
+            employee = Employee.objects.get(pk=pk)
+        except Employee.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = EmployeeSerializer(employee, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+        try:
+            employee = Employee.objects.get(pk=pk)
+        except Employee.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        employee.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    '''
+
+# Using ModelViewSet
+class EmployeeViewSet(viewsets.ModelViewSet):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer

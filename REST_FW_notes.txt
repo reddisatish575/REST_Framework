@@ -320,6 +320,9 @@ Viewsets
 	2. viewSets.ModelViewSet 
 		-> Takes only 'queryset', 'serializer_class' and automatcally provides both primary key
 			and non-primary key based operations.
+-> we will use routers instead of include views.
+-> no need of forward slash
+-> By using only one url, we can do all the CRUD operations
 
  
         
