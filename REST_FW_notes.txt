@@ -330,6 +330,19 @@ Nested Serializers
 	 key relationsip between the comment and the post. 
 -> if we want fetch the post with all the comments, then Nested serializers will be useful.
 
+Pagination 
+----------
+-> we have inbuilt Pagination in DRF.
+-> wee have two types of paginations
+	1. PageNumberPagination
+		-> it will take page_size parameter and returns the response accordingly
+		-> /blogs/?page=10
+	2. LimitOffsetPagination
+		-> it will take limit and offset parameter and returns the response accordingly.
+		-> /blogs/?limit=10&offset=0
+		-> Limit is the parameter that controls how mamy items you want to see in a single page.
+		-> Offset is the parameter that tells the API where to start fetching the items from.
+		
 
  
         
