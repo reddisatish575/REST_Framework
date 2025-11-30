@@ -324,6 +324,13 @@ Viewsets
 -> no need of forward slash
 -> By using only one url, we can do all the CRUD operations
 
+Nested Serializers 
+------------------
+-> In instagram,  one post can have multiple comments, for that we usually create foreign
+	 key relationsip between the comment and the post. 
+-> if we want fetch the post with all the comments, then Nested serializers will be useful.
+
+
  
         
 
